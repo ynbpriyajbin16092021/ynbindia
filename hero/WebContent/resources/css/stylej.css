@@ -1,0 +1,447 @@
+.switch {
+  position: relative;
+ 
+  width: 90px;
+  height: 34px;
+}
+
+.switch input {display:block;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: -11px;
+  right: 0;
+  bottom: 0;
+  background-color:#2ab934 ;
+  -webkit-transition: .4s;
+  transition: .4s;
+   border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color:  #ca2222;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(55px);
+}
+
+/*------ ADDED CSS ---------*/
+.slider:after
+{
+ content:'ON';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 10px;
+ font-family: Verdana, sans-serif;
+}
+
+input:checked + .slider:after
+{  
+  content:'OFF';
+}
+.topbar.PoinOfSale {
+    background-color: #393939;
+    /* margin-bottom: 15px; */
+}
+
+
+.addaddress{
+ text-align:center;
+ }
+.nwadjustmnt {
+    margin-bottom: 25px;
+}
+.bg_gray{
+ background-color: #909891;
+ padding:10px;
+}
+
+
+
+
+.addressborder{
+	border: 1px solid blue;
+}
+.amountpara {
+   margin-left: 60px;
+
+}
+
+.space {
+    margin-left: 25px;
+}
+.width_25 {
+    width: 25%;
+    display: block;
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+.width_75 {
+    width: 75%;
+    display: block;
+    float: right;
+    padding: 0;
+    margin: 0;
+}
+.main-content .page-content .NewPanel .panel-content {
+    padding: 0;
+}
+.main-content .page-content .panel-content {
+    padding: 20px 20px 10px 20px;
+    -webkit-border-radius: 0 0 2px 2px;
+    -moz-border-radius: 0 0 2px 2px;
+    border-radius: 0 0 2px 2px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+.marginTop {
+    margin-top: 20px;
+}
+.rowNor {
+    display: table;
+    width: 100%;
+}
+.reposrList {
+    margin-bottom: 40px;
+    margin-right: 100px;
+    padding: 0 30px;
+}
+.reposrList .ember-view a {
+ 
+	
+    border-bottom: 1px dashed #E9E9E9;
+}
+body .panel.NewPanel {
+    font-family: "Roboto","Helvetica Neue","Open Sans",Arial,sans-serif !important;
+}
+
+.reposrList .ember-view a:hover {
+    background-color: transparent;
+}
+body .panel.NewPanel {
+    font-family: "Roboto","Helvetica Neue","Open Sans",Arial,sans-serif !important;
+}
+.fontLg {
+    font-size: 20px;
+    color: #222;
+}
+.filter {
+    line-height: 31px;
+    font-weight: 400;
+}
+.displayTabel {
+    display: table;
+    width: 100%;
+}
+.filterSection {
+    padding: 10px 20px;
+    border-top: 1px solid #EDEDED;
+    background-color: #fafafa;
+    border-bottom: 1px solid #EDEDED;
+}
+.Report-header h4 {
+    font-size: 18px !important;
+    font-weight: 500;
+}
+.marginTop {
+    margin-top: 20px;
+}
+.rowNor {
+    display: table;
+    width: 100%;
+}
+.sales {
+    text-align: right;
+}
+.pbiller {
+   
+	 text-align: center;
+}
+.btnleft
+{
+	margin-left:50px;
+}
+.sortingTop .radio.radio-inline {
+    margin-top: 3px;
+}
+
+.radio.radio-inline {
+    margin-top: 10px;
+}
+
+.card .card-header .lowstockspan .countlowstock{
+							    border-radius: 50%;
+								color: #fff;
+								font-size: 11px;
+								height: 15px;
+								width: 15px;
+								line-height: 15px;
+								padding: 3px 7px;
+						}
+.input-icon{
+  position: absolute;
+  right: 3px;
+  top: calc(50% - 0.5em); /* Keep icon in center of input, regardless of the input height */
+}
+.input{
+  padding-left: 17px;
+}
+.input-wrapper{
+	
+  position: relative;
+}
+.tipDiv {
+    min-height: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    height: 125px;
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+    background: #fff;
+    margin-bottom: 0;
+    margin-top: 22px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.ash i{
+	 font-size: 200px;
+
+}
+
+.customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #E5E8E8;
+    color: black;
+}
+.yellow {
+    background-color: #00FF00;
+	color: black;
+}
+.buttoncolor {
+    background-color:#00FFFF;
+	color: black;
+}
+.stylepara
+{
+	float:right;
+   margin-bottom:10px;
+}
+
+.form-control.form-Tabel {
+      background-color: #dddddd38;
+}
+.hoversin a{
+   
+    text-decoration: none;
+}
+.input-group-addon {
+        padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: none;
+    border-radius: 1px;
+    /* padding-right: 16px; */
+}
+.widthvdeo {
+    width: 10%;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0px;
+    margin-left: 0px;
+}
+.widthvdeo1 {
+    width: 90%;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0px;
+}
+.brdr td, .brdr th{
+	border:none;
+}
+.sze{
+	width:100px;
+}
+.szebar{
+	width:150px;
+}
+.btnhgt{
+	height:38px;
+
+	}
+	/* drpdwn */
+.notify-arrow-white {
+    border-color: transparent transparent #68dff0;
+    border-bottom-color: white !important;
+    border-top-color: #68dff0 !important;
+}
+.notify-arrow {
+    border-style: solid;
+    border-width: 0 9px 9px;
+    height: 0;
+    margin-top: 0;
+    opacity: 0;
+    position: absolute;
+    right: 30px;
+    top: -18px;
+    transition: all 0.25s ease 0s;
+    width: 0;
+    z-index: 10;
+    margin-top: 10px;
+    opacity: 1;
+}
+ .dropdown-menu {
+    position: absolute;
+    top: 37px;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+   
+} 
+.onoffswitch .onoffswitch-active .onoffswitch-switch {
+    background: #2ab934;
+    left: 0;
+}
+.onoffswitch .onoffswitch-switch {
+    border: 0 solid #999999;
+    bottom: 0;
+    display: block;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 40px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.onoffswitch {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    float: left;
+    margin-right: 20px;
+    position: relative;
+    width: 100px;
+}
+.onoffswitch .onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch .onoffswitch-label {
+    border: 0 solid #999999;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.onoffswitch .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch .onoffswitch-inner .onoffswitch-active {
+    background-color: #C2C2C2;
+    color: #fff;
+    padding-left: 15px;
+}
+.onoffswitch .onoffswitch-inner {
+    -moz-transition: margin 0.3s ease-in 0;
+    -o-transition: margin 0.3s ease-in 0;
+    -webkit-transition: margin 0.3s ease-in 0;
+    display: block;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0;
+    width: 200%;
+}
+.onoffswitch .onoffswitch-inner > span {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff;
+    display: block;
+    float: left;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    position: relative;
+    width: 50%;
+}
+.onoffswitch .onoffswitch-inner .onoffswitch-inactive {
+    background-color: #C2C2C2;
+    color: #fff;
+    padding-right: 15px;
+    text-align: right;
+}
+.onoffswitch .onoffswitch-inactive .onoffswitch-switch {
+    background: #ca2222;
+    right: 0;
+}
+.onoffswitch .onoffswitch-active .onoffswitch-switch::before {
+    border-color: #2ab934 transparent transparent #2ab934;
+    border-style: solid;
+    border-width: 15px 10px;
+    content: " ";
+    left: 40px;
+    position: absolute;
+    top: 0;
+}
+.onoffswitch .onoffswitch-inactive .onoffswitch-switch::before {
+    border-color: transparent #ca2222 #ca2222 transparent;
+    border-style: solid;
+    border-width: 15px 10px;
+    content: " ";
+    position: absolute;
+    right: 40px;
+    top: 0;
+}

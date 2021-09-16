@@ -1,0 +1,38 @@
+.print.myBtnTab{
+	border:none;
+	background:none;
+	color:#212529;
+}
+.delete.myBtnTab{
+	border:none;
+	background:none;
+	color:red;
+}
+.edit.myBtnTab{
+	border:none;
+	background:none;
+	color:#5586c3;
+}
+.Permission.myBtnTab{
+	border:none;
+	background:none;
+	color:rgb(9 151 46);
+}
+.save.myBtnTab{
+	border:none;
+	background:none;
+	color:#2c7723;
+}
+.margin-bot-15{
+	margin-bottom:15px;
+}
+a.mar-bot-15{
+margin-bottom:10px;
+margin-right: 40px;
+margin-top: 0px;
+}
+.configure.myBtnTab{
+	border:none;
+	background:none;
+	color:#000000;
+}

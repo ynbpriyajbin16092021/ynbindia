@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="com.hero.controller" />
+
+	<mvc:interceptors>
+      <bean class="com.hero.services.admin.security.HERO_ADM_SERVC_ERPSECURITYHANDLER" />
+	</mvc:interceptors>
+	
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+		<property name="prefix">
+			<value>/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		 <!-- setting maximum upload size -->
+		<property name="maxUploadSize" value="100000000" />
+
+	</bean>
+	
+<!--  <bean id="hosurInventoryDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url" value="jdbc:mysql://192.168.0.106:3306/hero_puzzi" />
+	<property name="username" value="root" />
+	<property name="password" value="admin123" />
+</bean>  
+
+ <bean id="hosurInventoryDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url" value="jdbc:mysql://localhost:3306/ynbindia_hero_puzzi" />
+	<property name="username" value="ynbindia_ynbindia" />
+	<property name="password" value="ynbindia@2021" />
+</bean> --> 
+
+
+  <bean id="hosurInventoryDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url" value="jdbc:mysql://localhost:3306/hero_puzzi" />
+	<property name="username" value="root" />
+	<property name="password" value="admin123" />
+</bean>
+
+<bean id="HosurInvTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<property name="dataSource">
+		<ref bean="hosurInventoryDS" />
+	</property>
+</bean>
+
+<bean id="HosurInvTemplateService" class="com.hero.services.admin.util.HERO_ADM_SERVC_HOSURINVENTORYUTIL">
+	<property name="jdbcTemplate" ref="HosurInvTemplate" />
+</bean>
+
+	<bean id="springMYSQLDAOImpl" class="com.hero.services.admin.connection.SpringAccessJdbcImpl">
+		<property name="jdbcTemplate" ref="HosurInvTemplate" />
+	</bean>
+	
+	<bean id="connUtil" class="com.hero.services.admin.util.ConnectionUtil">
+		<property name="springMYSQLDAO" ref="springMYSQLDAOImpl" />
+	</bean>
+
+<bean id="inventoryUtilOBJ" class="com.hero.services.admin.util.HERO_ADM_SERVC_HOSURINVENTORYUTIL"/>
+
+<bean id="inventoryLOVOBJ" class="com.hero.services.admin.lov.HERO_ADM_SERVC_INVENTORYLOVIMPL"/>
+
+<bean id="clinicLOVOBJ" class="com.hero.clinic.services.lov.HERO_CLC_SERVC_CLINICLOVIMPL"/>
+
+<bean id="inventoryResponseInfoOBJ" class="com.hero.services.admin.response.HERO_ADM_SERVC_INVENTORYRESPONSEINFO"/>
+<bean id="inventoryResponseOBJ" class="com.hero.services.admin.response.HERO_ADM_SERVC_INVENTORYRESPONSE"/>
+
+<bean id="clinicResponseInfoOBJ" class=" com.hero.clinic.services.response.HERO_CLC_SERVC_CLINICRESPONSEINFO"/>
+<bean id="clinicResponseOBJ" class="com.hero.clinic.services.response.HERO_CLC_SERVC_CLINICRESPONSE"/>
+
+<bean id="loginHelperOBJ" class="com.hero.forms.services.admin.login.HERO_ADM_SERVC_LOGINHELPER"/>
+<bean id="loginDAO" class="com.hero.forms.services.admin.login.HERO_ADM_SERVC_LOGINDAOIMPL"/>
+<bean id="loginObj" class="com.hero.forms.services.admin.login.HERO_ADM_SERVC_LOGINREQUEST">
+
+</bean>
+
+
+
+
+<!-- <bean id="uploadHelperOBJ" class="com.hero.controller.servies.util.HERO_UPLOAD_HELPER"/>
+<bean id="uploadDAOobj" class="com.hero.controller.servies.util.HERO_UPLOAD_DAO_IMPL"/>
+ -->
+
+<bean id="addressMasterHelperOBJ" class="com.hero.forms.services.admin.masters.address.HERO_ADM_SERVC_ADDRESS_HELPER"/>
+<bean id="addressMasterDAOobj" class="com.hero.forms.services.admin.masters.address.HERO_ADM_SERVC_ADDRESSDAOIMPL"/>
+
+<bean id="forgotpwHelperOBJ" class="com.hero.forms.services.approval.forgotpw.HERO_ADM_SERVC_FORGOTPWHELPER"/>
+<bean id="forgotpwDAOobj" class="com.hero.forms.services.approval.forgotpw.HERO_ADM_SERVC_FORGOTPWDAOIMPL"/>
+
+<bean id="customerMasterHelperOBJ" class="com.hero.forms.services.stock.masters.customer.HERO_STK_SERVC_CUSTOMERHELPER"/>
+<bean id="customerMasterDAOobj" class="com.hero.forms.services.stock.masters.customer.HERO_STK_SERVC_CUSTOMERDAOIMPL"/>
+
+
+<bean id="currencyMasterHelperOBJ" class="com.hero.forms.services.admin.masters.currency.HERO_ADM_SERVC_CURRENCYHELPER"/>
+<bean id="currencyMasterDAOobj" class="com.hero.forms.services.admin.masters.currency.HERO_ADM_SERVC_CURRENCYDAOIMPL"/>
+
+<bean id="taxMasterHelperOBJ" class="com.hero.forms.services.admin.masters.tax.HERO_ADM_SERVC_TAXHELPER"/>
+<bean id="taxMasterDAOobj" class="com.hero.forms.services.admin.masters.tax.HERO_ADM_SERVC_TAXDAOIMPL"/>
+
+<bean id="usertypeHelperOBJ" class="com.hero.forms.services.admin.masters.usertypes.HERO_ADM_SERVC_USERTYPEHELPER"/>
+<bean id="usertypeDAOobj" class="com.hero.forms.services.admin.masters.usertypes.HERO_ADM_SERVC_USERTYPEDAOIMPL"/>
+
+<bean id="userMasterHelperOBJ" class="com.hero.forms.services.admin.masters.user.HERO_ADM_SERVC_USERHELPER"/>
+<bean id="userMasterDAOobj" class="com.hero.forms.services.admin.masters.user.HERO_ADM_SERVC_USERDAOIMPL"/>
+
+<bean id="expirydateHelperOBJ" class="com.hero.forms.services.admin.tools.expirydatechecker.HERO_ADM_SERVC_EXPIRYDATECHECKERHELPER"/>
+<bean id="expirydateDAOobj" class="com.hero.forms.services.admin.tools.expirydatechecker.HERO_ADM_SERVC_EXPIRYDATECHECKERDAOIMPL"/>
+
+<bean id="barcodeHelperOBJ" class="com.hero.forms.services.admin.tools.barcode.HERO_ADM_SERVC_BARCODEHELPER"/>
+<bean id="barcodeDAOobj" class="com.hero.forms.services.admin.tools.barcode.HERO_ADM_SERVC_BARCODEDAOIMPL"/>
+
+<bean id="lowstockHelperOBJ" class="com.hero.forms.services.stock.tools.lowstock.HERO_STK_SERVC_LOWSTOCKHELPER"/>
+<bean id="lowstockDAOobj" class="com.hero.forms.services.stock.tools.lowstock.HERO_STK_SERVC_LOWSTOCKDAOIMPL"/>
+
+<bean id="orgnHelperOBJ" class="com.hero.forms.services.admin.templates.organization.HERO_SERVC_ORGANISATIONHELPER"/>
+<bean id="orgnDAOobj" class="com.hero.forms.services.admin.templates.organization.HERO_SERVC_ORGANISATIONDAOIMPL"/>
+
+<bean id="smsHelperOBJ" class="com.hero.forms.services.admin.templates.sms.HERO_SERVC_SMSTEMPLATEHELPER"/>
+<bean id="smsDAOobj" class="com.hero.forms.services.admin.templates.sms.HERO_SERVC_SMSTEMPLATESERVICEDAOIMPL"/>
+
+<bean id="storeMasterHelperOBJ" class="com.hero.forms.services.stock.masters.store.HERO_STK_SERVC_STOREHELPER"/>
+<bean id="storeMasterDAOobj" class="com.hero.forms.services.stock.masters.store.HERO_STK_SERVC_STOREDAOIMPL"/>   
+
+<bean id="stockMonitorHelperOBJ" class="com.hero.forms.services.stock.tools.stockmonitor.HERO_STK_SERVC_STOCKMONITORHELPER"></bean>
+<bean id="stockMonitorDAOobj" class="com.hero.forms.services.stock.tools.stockmonitor.HERO_STK_SERVC_STOCKMONITORDAOIMPL"/>
+
+<bean id="inventoryDAOOBJ" class="com.hero.services.admin.util.HERO_ADM_SERVC_INVENTORYDAO"/>
+
+<bean id="clinicsHelperOBJ" class="com.hero.clinic.forms.clinics.HERO_CLC_SERVC_CLINICHELPER"/>
+<bean id="clinicsDAOobj" class="com.hero.clinic.forms.clinics.HERO_CLC_SERVC_CLINICSDAOIMPL"/>
+
+<!-- <bean id="productMasterHelperOBJ" class="com.hero.stock.forms.transactions.product.HERO_STK_SERVC_PRODUCTHELPER"/>
+<bean id="productDAOobj" class="com.hero.stock.forms.transactions.product.HERO_STK_SERVC_PRODUCTDAOIMPL"/>
+ -->
+ 
+<bean id="txncodeHelperOBJ" class="com.hero.forms.services.admin.masters.txncode.HERO_ADM_SERVC_TXNCODEHELPER"/>
+<bean id="txncodeDAOobj" class="com.hero.forms.services.admin.masters.txncode.HERO_ADM_SERVC_TXNCODEDAOIMPL"/> 
+
+</beans>

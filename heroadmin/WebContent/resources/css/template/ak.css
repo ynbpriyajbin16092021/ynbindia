@@ -1,0 +1,356 @@
+@CHARSET "ISO-8859-1";
+.flname{
+	width: 33%;
+	position: relative;
+	padding: 0px;
+	display: block;
+	float: left;
+	margin:0;
+}
+.flname1{
+	width: 32%;
+	position: relative;
+	padding-right: 1px;
+	display: block;
+	float: left;
+	margin:0;
+}
+.flname2{
+	width: 33%;
+	position: relative;
+	padding: 0px;
+	padding-left:8px;
+	display: block;
+	float: left;
+	margin:0;
+}
+
+.aku{
+	width:90% !important;
+	margin-left: 21px !important;
+}
+
+.aku1{
+	width:90% !important;
+}
+
+.aku2{
+	width: 77% !important;
+	margin-left: 24px !important;
+}
+
+.akw{
+	width: 90% !important;
+}
+
+.akm{
+	margin-left: 23px !important;
+}
+.akucheckbox-inline{
+	padding-left: 0px !important;
+	margin: 8px 0 0 !important;
+}
+
+.akucheckbox-inline1{
+	
+	margin: 8px 0 0 !important;
+}
+
+.akc1form-group label {
+    width: 35% !important;
+}
+
+
+.akform-control{
+	border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #d0d0d0;
+    font-size: 15px;
+	/* border-top: 1px solid #d0d0d0;
+    border-right: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0; */
+	box-shadow: none !important;
+    border-radius: 0px;
+	width: 57%;
+    display: block;
+    float: left;
+	height: 34px;
+    padding: 6px 1px;
+	line-height: 1.42857143;
+    color: #555;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;	
+}
+.akform-control1{
+	border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #d0d0d0;
+    font-size: 15px;
+	/* border-top: 1px solid #d0d0d0;
+    border-right: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0; */
+	box-shadow: none !important;
+    border-radius: 0px;
+	/* width: 95%; */
+    display: block;
+    float: left;
+	height: 34px;
+    padding: 6px 1px;
+	line-height: 1.42857143;
+    color: #555;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;	
+}
+.akform label{
+	color: #666666 !important;
+	font-size:15px;
+}
+
+.akform-group label{
+	width: 35%;
+    display: block;
+    float: left;
+    padding: 6px 12px 0 12px;
+    font-weight: normal;
+}
+
+.aks{
+	margin-top:32px;
+	margin-left:751px;
+}
+
+.aksat{
+	margin-top:171px;
+	margin-left:751px;
+}
+.aksac{
+	margin-top:74px;
+	margin-left:751px;
+}
+.akcontent-div-height{
+	height: 500px;
+	position: relative;
+}
+.akcontent-div-heightur{
+	height: 251px;
+	position: relative;
+}
+.akut{
+	margin-top:54px;
+	margin-left:235px;
+}
+.akut1{
+	margin-left:-6px;
+}
+.akfloat{
+	
+margin-left: 8px;
+}
+
+.akfloat1{
+	
+margin-left: 897px;
+}
+.btn-akprimary{
+	margin-top:35px;
+	margin-left:7px;
+}
+
+.akr{
+	margin-left:6px;
+}
+
+.akcol-sm-8{
+	width: 66.66666667%;
+	position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left:147px;
+    }
+
+.akfcol-md-12{
+	position: relative;
+    min-height: 1px;
+    /* padding-right: 15px; */
+    float: left
+}
+
+.akfcol-md-6 {
+    width: 54%;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    /* padding-left: 15px; */
+}
+
+.akfcol-md-61 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 156px;
+    margin-top: -24px;
+}
+
+.akfcol-md-63 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 155px;
+    margin-top: -23px;
+}
+
+.akfcol-md-62 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 158px;
+    margin-top: -25px;
+}
+
+.akfcol-md-5 {
+    width: 41.66666667%;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    /* padding-left: 15px; */
+}
+
+.akfform-group {
+    margin-bottom: 24px;
+    margin-top: 9px;
+}
+
+.akfcol-md-6 label {
+    /* width: 35%; */
+    display: block;
+    float: left;    
+    font-weight: normal;
+}
+
+.akfpls{
+	padding-left: 0px !important;
+	margin-top: 10px !important;
+}
+
+.akfpwi{
+	width: 31% !important;
+	margin-top: -3px !important;
+	margin-left: -11px !important;
+}
+
+.akwidth_46 {
+    width: 46%;
+    display: block;
+    float: left;
+}
+								/* Pharmacy Style */
+.akform-controlpp{
+	width: 29%;
+    display: block;
+    float: left;
+	border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #d0d0d0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    box-shadow: none !important;
+    border-radius: 0px;
+    font-size: 15px;
+	height: 34px;
+    padding: 6px 12px;
+	line-height: 1.42857143;
+    color: #555;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.akuom{
+	width: 25%;
+    margin-left: 23px;
+}
+
+.akpcol-sm-8{
+	width: 66.66666667%;
+	position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    margin-left:147px;
+    }
+ 
+ .akrp{
+	margin-left:-1px;
+}
+
+.akmain-entity-title {
+    font-size: 22pt;
+    color: #000000;
+}
+
+a.stdtl{
+	color: #131010;
+}
+
+
+
+
+
+
+						/* Pos Screen Settings Start */
+
+
+.akpospadtop{
+	margin-top:5px;
+}
+
+.akposbot{
+	border-bottom: none !important;
+}
+
+i.akpossearch {
+	color:#0E7BDD;
+}
+
+.akpodivwid{
+	width:40px;
+	border-top:none;
+	border-left:none;
+	border-right:none;
+	border-bottom:none;
+	margin-left:10px;
+}
+
+.akpodivwid1{
+	width:40px;
+	border-top:none;
+	border-left:none;
+	border-right:none;
+	border-bottom:none;
+	margin-left:18px;
+}
+
+.akpodivwidsel{
+	width:40px;
+	border-top:none;
+	border-left:none;
+	border-right:none;
+	border-bottom:none;
+}
+
+.akpodivwid2{
+	width:50px;
+	border-top:none;
+	border-left:none;
+	border-right:none;
+	border-bottom:none;
+	margin-left:20px;
+}
+
+
+						/* Pos Screen Settings End */

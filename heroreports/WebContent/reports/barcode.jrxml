@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="barcode" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d94fbfc4-986b-4d4c-be4f-b1f44d095f2e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PROD_ID" class="java.lang.String"/>
+	<parameter name="PRINT_STYLE_TYPE" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT(B.`product_id`),`product_name`,`product_code`,B.`batch_id`,(SELECT SUM(`product_count`) FROM `inv_transfer`a1
+JOIN  `inv_transfer_product` b1 ON a1.`transfer_id` = b1.`transfer_id`  WHERE `product_id` = B.`product_id` AND `batch_id` = b.`batch_id`
+AND `pharmacy_id` = f.`user_store_id`)product_count,`store_name`,F.`currencyid`,F.`userid`,`sell_price`,
+DATE_FORMAT(`prec_expiry_date`,'%c/%e/%y') prec_expiry_date,`CURR_SYMBOL`,
+CONCAT(B.`product_id`,'#',b.`batch_id`)barcodecontent
+ FROM `inv_transfer` A
+JOIN `inv_transfer_product` B ON A.`transfer_id` = B.`transfer_id` JOIN `inv_stock` C ON C.`product_id` = B.`product_id`
+AND C.`batch_id` = B.`batch_id` JOIN `inv_product` D ON D.`product_id` = C.`product_id` AND C.`product_id` = B.`product_id`
+JOIN `inv_store` E ON E.`store_id` = A.`pharmacy_id` JOIN `inv_user` F ON F.`currencyid` = E.`currency_id`
+JOIN `inv_purchase_received_dtl` g ON g.`prec_product_id` = b.`product_id` AND g.`prec_batchno` = b.`batch_id`
+JOIN `inv_currency` h ON h.`currency_id` = f.currencyid AND h.`currency_id` = E.`currency_id` WHERE  F.`userid` = 3
+AND a.transfer_id = 30 AND B.`product_id` = 1 AND b.`batch_id` = 'CR04' GROUP BY B.`product_id`,b.`batch_id`]]>
+	</queryString>
+	<field name="product_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="product_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="product_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="batch_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="product_count" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="store_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="currencyid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="userid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sell_price" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prec_expiry_date" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CURR_SYMBOL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="barcodecontent" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="96">
+			<componentElement>
+				<reportElement uuid="e7fcfa1c-e8d6-45c1-ae1b-b5f33d47e2b3" x="0" y="0" width="200" height="50"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{barcodecontent}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="c98ea286-ea95-41e2-a8eb-fa38ef72ae1c" x="200" y="0" width="200" height="50"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA["1234"]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

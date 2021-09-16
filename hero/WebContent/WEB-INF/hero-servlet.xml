@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="com.hero.controller" />
+
+	<mvc:interceptors>
+      <bean class="com.hero.services.admin.security.HERO_ADM_SERVC_ERPSECURITYHANDLER" />
+	</mvc:interceptors>
+	
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+		<property name="prefix">
+			<value>/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		 <!-- setting maximum upload size -->
+		<property name="maxUploadSize" value="100000000" />
+
+	</bean>
+	
+<!--  <bean id="hosurInventoryDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url" value="jdbc:mysql://192.168.0.106:3306/hero_puzzi" />
+	<property name="username" value="root" />
+	<property name="password" value="admin123" />
+</bean>  
+
+ <bean id="hosurInventoryDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url" value="jdbc:mysql://localhost:3306/ynbindia_hero_puzzi" />
+	<property name="username" value="ynbindia_ynbindia" />
+	<property name="password" value="ynbindia@2021" />
+</bean> --> 
+
+
+  <bean id="hosurInventoryDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<property name="url" value="jdbc:mysql://localhost:3306/hero_puzzi" />
+	<property name="username" value="root" />
+	<property name="password" value="admin123" />
+</bean>
+
+<bean id="HosurInvTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<property name="dataSource">
+		<ref bean="hosurInventoryDS" />
+	</property>
+</bean>
+
+	<bean id="HosurInvTemplateService" class="com.hero.services.admin.util.HERO_ADM_SERVC_HOSURINVENTORYUTIL">
+		<property name="jdbcTemplate" ref="HosurInvTemplate" />
+	</bean>
+
+	<bean id="springMYSQLDAOImpl" class="com.hero.services.admin.connection.SpringAccessJdbcImpl">
+		<property name="jdbcTemplate" ref="HosurInvTemplate" />
+	</bean>
+	
+	<bean id="connUtil" class="com.hero.services.admin.util.ConnectionUtil">
+		<property name="springMYSQLDAO" ref="springMYSQLDAOImpl" />
+	</bean>
+
+<bean id="inventoryUtilOBJ" class="com.hero.services.admin.util.HERO_ADM_SERVC_HOSURINVENTORYUTIL"/>
+
+<bean id="inventoryLOVOBJ" class="com.hero.services.admin.lov.HERO_ADM_SERVC_INVENTORYLOVIMPL"/>
+
+
+<bean id="inventoryResponseInfoOBJ" class="com.hero.services.admin.response.HERO_ADM_SERVC_INVENTORYRESPONSEINFO"/>
+<bean id="inventoryResponseOBJ" class="com.hero.services.admin.response.HERO_ADM_SERVC_INVENTORYRESPONSE"/>
+
+
+<bean id="loginHelperOBJ" class="com.hero.forms.services.admin.login.HERO_ADM_SERVC_LOGINHELPER"/>
+<bean id="loginDAO" class="com.hero.forms.services.admin.login.HERO_ADM_SERVC_LOGINDAOIMPL"/>
+<bean id="loginObj" class="com.hero.forms.services.admin.login.HERO_ADM_SERVC_LOGINREQUEST">
+
+</bean>
+
+<bean id="forgotpwHelperOBJ" class="com.hero.forms.services.approval.forgotpw.HERO_ADM_SERVC_FORGOTPWHELPER"/>
+<bean id="forgotpwDAOobj" class="com.hero.forms.services.approval.forgotpw.HERO_ADM_SERVC_FORGOTPWDAOIMPL"/>
+
+<bean id="orgnHelperOBJ" class="com.hero.forms.services.admin.templates.organization.HERO_SERVC_ORGANISATIONHELPER"/>
+<bean id="orgnDAOobj" class="com.hero.forms.services.admin.templates.organization.HERO_SERVC_ORGANISATIONDAOIMPL"/>
+
+<bean id="inventoryDAOOBJ" class="com.hero.services.admin.util.HERO_ADM_SERVC_INVENTORYDAO"/>
+
+<bean id="smsHelperOBJ" class="com.hero.forms.services.admin.templates.sms.HERO_SERVC_SMSTEMPLATEHELPER"/>
+<bean id="smsDAOobj" class="com.hero.forms.services.admin.templates.sms.HERO_SERVC_SMSTEMPLATESERVICEDAOIMPL"/>
+
+	
+	
+	<bean name="JobA" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.hero.services.admin.communication.HERO_ADM_SERVC_SEND_INFO" />
+	</bean>
+
+	<bean id="cronTriggerJobA" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="JobA" />
+		<property name="cronExpression" value="0/30 * * * * ?" />
+		<!--  <property name="cronExpression" value="0 0/2 * * * ?" />  for two minutes-->
+		<!--  <property name="cronExpression" value="0 0 0 1/1 * ? *" /> -->
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTriggerJobA" />
+			</list>
+		</property>
+	</bean>
+
+
+</beans>

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="purchaseschedule" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0b060fae-cb9a-40e9-a4fb-53bab2da1814">
+	<property name="ireport.zoom" value="0.90909090909091"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="27"/>
+	<subDataset name="itemdataset" uuid="426636d3-608b-4c52-ad0b-88e5b7013115">
+		<parameter name="P_SUB_PURCHASE_ID" class="java.lang.String"/>
+		<parameter name="P_SUB_BILLNO" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT `pur_req_id`,`prec_product_id`,`product_name`,`prec_recving_quantity`,`prec_free_count`,
+CONCAT('Rs. ',FORMAT(`prec_pur_price`,2))prec_pur_price,
+CONCAT('Rs. ',FORMAT((`prec_pur_price` * `prec_recving_quantity`),2))amount
+FROM `hero_stock_purchase` JOIN `hero_stock_purchase_receive_hdr` A ON `purchase_code` = `pur_req_id`
+JOIN `hero_stock_purchase_received_dtl` B ON A.`prhdr_id` = B.`prec_hdr_id`
+JOIN `hero_stock_product` C ON C.`product_id` = B.`prec_product_id`
+
+WHERE  `purchase_id` = $P{P_SUB_PURCHASE_ID}
+AND `prhdr_bill_no` = $P{P_SUB_BILLNO}]]>
+		</queryString>
+		<field name="pur_req_id" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prec_product_id" class="java.lang.String">
+			<fieldDescription><![CDATA[product id added in this purchase]]></fieldDescription>
+		</field>
+		<field name="product_name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prec_recving_quantity" class="java.lang.Integer">
+			<fieldDescription><![CDATA[quantity of products]]></fieldDescription>
+		</field>
+		<field name="prec_free_count" class="java.lang.Integer">
+			<fieldDescription><![CDATA[no of products free for this particular product]]></fieldDescription>
+		</field>
+		<field name="prec_pur_price" class="java.lang.String">
+			<fieldDescription><![CDATA[purchase price]]></fieldDescription>
+		</field>
+		<field name="amount" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="companydataset" uuid="170c15d4-b496-4d26-b0b3-86a19185cb6a">
+		<queryString>
+			<![CDATA[SELECT `orgn_name`,`orgn_address`,`orgn_mobile`,`orgn_email` FROM `hero_orgn_table`]]>
+		</queryString>
+		<field name="orgn_name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="orgn_address" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="orgn_mobile" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="orgn_email" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="patientdataset" uuid="ff456a93-0bf5-47ea-b523-0d0ff1197da7">
+		<parameter name="P_PATIENT_ID_SUB" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT `hp_id`,`hp_name`,CONCAT(`hp_gender`, ' /','')gender,DATE_FORMAT(CURDATE(),'%d/%m/%Y')currentdate,
+(YEAR(`hp_dob`) - YEAR(CURDATE())
+    - (DATE_FORMAT(`hp_dob`, '%m%d') < DATE_FORMAT(CURDATE(), '%m%d'))) * (-1)
+age FROM `hero_admin_patient` WHERE `hp_seq_id` = $P{P_PATIENT_ID_SUB}]]>
+		</queryString>
+		<field name="hp_id" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hp_name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="gender" class="java.lang.String"/>
+		<field name="currentdate" class="java.lang.String"/>
+		<field name="age" class="java.lang.Long"/>
+	</subDataset>
+	<subDataset name="prescriptiondetailsset" uuid="c84687d6-9327-44cf-889c-99240ccfdbd7">
+		<parameter name="P_PRESCRIPTION_ID_SUB" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT `hppm_medicine_desc`,`hppm_dosage`,`hppm_consume_days` FROM `hero_clinic_patient_prescriptions_details` WHERE `hpp_id` = $P{P_PRESCRIPTION_ID_SUB}]]>
+		</queryString>
+		<field name="hppm_medicine_desc" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppm_dosage" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppm_consume_days" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dosdataset" uuid="4cce39a7-2844-46ef-8c5d-6193a8efe729">
+		<parameter name="P_PRESCRIPTION_ID_SUB" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT * FROM `hero_clinic_patient_prescriptions_dodonts` a LEFT OUTER JOIN
+ `hero_clinic_prescriptions_dodonts` b ON a.`hpd_id` = b.`hpd_id` WHERE a.`hpp_id` = $P{P_PRESCRIPTION_ID_SUB}]]>
+		</queryString>
+		<field name="hpd_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppd_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hpb_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hpp_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppd_dos" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppd_donts" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hpd_desc" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dontsdataset" uuid="6f451dcd-c63b-406f-9438-a146558bbded">
+		<parameter name="P_PRESCRIPTION_ID_SUB" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT * FROM `hero_clinic_patient_prescriptions_dodonts` a LEFT OUTER JOIN
+ `hero_clinic_prescriptions_dodonts` b ON a.`hpd_id` = b.`hpd_id` WHERE a.`hpp_id` = $P{P_PRESCRIPTION_ID_SUB}]]>
+		</queryString>
+		<field name="hpd_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hpd_desc" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppd_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hpb_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hpp_id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppd_dos" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hppd_donts" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset1" uuid="a4adc183-7d45-4e89-824b-02445bbacce2"/>
+	<subDataset name="dataset2" uuid="352145ab-1eef-4b32-a3fe-eca4d5bc5060"/>
+	<parameter name="P_PRESCRIPTION_ID" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="P_LOGINED_USER" class="java.lang.String"/>
+	<parameter name="leftimage" class="java.lang.String"/>
+	<parameter name="rightimage" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT `hpp_id`,`hpp_prescription_id`,`hpb_seq_id`,`hp_id`,`bd_id`,`hpp_date`,`hpp_time`,`hpp_provisional_diagnosis`,`hpp_final_diagnosis`,
+`hpp_case_history`,`hpp_excercise`,`hpp_payment_done`,`hpp_created_by`,`hpp_created_date`,`hpp_modified_by`,
+`hpp_modified_date`,`hpp_type`,`username`,`qualification`,`bc_name`   FROM `hero_clinic_patient_prescriptions` a JOIN `hero_user` b ON b.`userid`=a.`bd_id` JOIN `hero_admin_clinic` c ON c.`bc_id`=b.`user_clinic_id`  WHERE `hpp_id`  = $P{P_PRESCRIPTION_ID}]]>
+	</queryString>
+	<field name="hpp_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_prescription_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpb_seq_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hp_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bd_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_time" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_provisional_diagnosis" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_final_diagnosis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_case_history" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_excercise" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_payment_done" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_created_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_modified_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_modified_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hpp_type" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="username" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qualification" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bc_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<image>
+				<reportElement x="225" y="2" width="165" height="65" uuid="d2d21ca0-a04e-41b6-9a0b-989c174ec96d"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="3" y="2" width="100" height="65" uuid="fe5ce8f8-a3a7-4483-ba7d-1582e089b8f6"/>
+				<imageExpression><![CDATA[$P{leftimage}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="452" y="2" width="100" height="65" uuid="216fb995-5243-4923-834a-135a6acf5bcc"/>
+				<imageExpression><![CDATA[$P{rightimage}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="81" width="555" height="1" forecolor="#CCCCCC" uuid="b7839fbf-4132-46d8-8d56-1ecaef46fa20"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="75" splitType="Stretch">
+			<textField>
+				<reportElement x="9" y="35" width="106" height="20" forecolor="#666666" uuid="5ec2350b-7510-43d7-bfab-7fbcadfff572"/>
+				<box leftPadding="3">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineColor="#666666"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qualification}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="55" width="106" height="20" forecolor="#666666" uuid="8637e69d-0a65-4429-9a9c-125766b68bac"/>
+				<box leftPadding="3">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineColor="#666666"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bc_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="10" width="162" height="25" forecolor="#CC3300" uuid="1612b3db-69fe-4eb6-9f7d-8c5b11f5b9aa"/>
+				<box leftPadding="3">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineColor="#666666"/>
+				</box>
+				<textElement>
+					<font size="17" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="76" splitType="Stretch">
+			<componentElement>
+				<reportElement x="6" y="26" width="545" height="35" uuid="195be8a2-341c-4215-92b4-caad98c8847f"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="patientdataset" uuid="56e6d925-f05c-4afb-963a-5d27b685fe4d">
+						<datasetParameter name="P_PATIENT_ID_SUB">
+							<datasetParameterExpression><![CDATA[$F{hp_id}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="35" width="545">
+						<textField>
+							<reportElement x="3" y="0" width="112" height="20" uuid="5376e9b5-8316-4a33-bcd1-c3b1d11ad426"/>
+							<box leftPadding="3">
+								<pen lineColor="#666666"/>
+								<topPen lineWidth="0.25" lineColor="#666666"/>
+								<leftPen lineWidth="0.25" lineColor="#666666"/>
+								<bottomPen lineWidth="0.25" lineColor="#666666"/>
+								<rightPen lineWidth="0.25" lineColor="#666666"/>
+							</box>
+							<textElement>
+								<font isItalic="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA["Ref: "+$F{hp_id}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="115" y="0" width="200" height="20" uuid="d66b02f1-847b-409b-81be-814ac55ff932"/>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25" lineColor="#999999"/>
+								<leftPen lineWidth="0.25" lineColor="#999999"/>
+								<bottomPen lineWidth="0.25" lineColor="#999999"/>
+								<rightPen lineWidth="0.25" lineColor="#999999"/>
+							</box>
+							<textElement>
+								<font isItalic="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA["Name : "+$F{hp_name}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="315" y="0" width="110" height="20" uuid="6ea47d5c-af46-44f3-ae60-014ec0e005b0"/>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25" lineColor="#999999"/>
+								<leftPen lineWidth="0.25" lineColor="#999999"/>
+								<bottomPen lineWidth="0.25" lineColor="#999999"/>
+								<rightPen lineWidth="0.25" lineColor="#999999"/>
+							</box>
+							<textElement>
+								<font isItalic="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA["Sex / Age: "+$F{gender} + ""+$F{age}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="425" y="0" width="120" height="20" uuid="fe8234de-549e-4e54-bf83-edb3d0463655"/>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25" lineColor="#333333"/>
+								<leftPen lineWidth="0.25" lineColor="#333333"/>
+								<bottomPen lineWidth="0.25" lineColor="#333333"/>
+								<rightPen lineWidth="0.25" lineColor="#333333"/>
+							</box>
+							<textElement>
+								<font isItalic="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA["Date : "+$F{currentdate}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="282">
+			<rectangle>
+				<reportElement x="392" y="0" width="165" height="225" uuid="accfd43c-39e8-4da8-b543-442f481552a7"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<componentElement>
+				<reportElement x="3" y="47" width="365" height="23" uuid="f03562f5-8791-4654-8e44-90e95364aab4"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="prescriptiondetailsset" uuid="f411fc0c-c9ba-4e72-ade5-3c4085787611">
+						<datasetParameter name="P_PRESCRIPTION_ID_SUB">
+							<datasetParameterExpression><![CDATA[$P{P_PRESCRIPTION_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="23" width="365">
+						<textField>
+							<reportElement x="6" y="0" width="162" height="20" uuid="3dcb9e7d-19d3-4966-96dc-ad8beec95df8"/>
+							<textFieldExpression><![CDATA[$F{hppm_medicine_desc}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="168" y="3" width="115" height="20" uuid="85574dde-b4cc-42ea-8cc4-5aabf0bed590"/>
+							<textFieldExpression><![CDATA[$F{hppm_dosage}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="283" y="3" width="82" height="20" uuid="6690ff5f-e891-4e06-9fe1-4200a6d6bf12"/>
+							<textFieldExpression><![CDATA[$F{hppm_consume_days}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement mode="Opaque" x="392" y="0" width="165" height="30" backcolor="#009933" uuid="5a4e0437-9195-4b08-99cd-cbd4e38f1ec0"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Do's]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="390" y="30" width="165" height="20" uuid="0f0e949b-2f92-440b-835c-49c92126b845"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dosdataset" uuid="282b4395-8576-4910-9702-fdcabe94f572">
+						<datasetParameter name="P_PRESCRIPTION_ID_SUB">
+							<datasetParameterExpression><![CDATA[$P{P_PRESCRIPTION_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="165">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="2" y="0" width="163" height="17" isPrintWhenDetailOverflows="true" uuid="f605afe7-16b7-4024-98a7-170470c15e8e"/>
+							<box leftPadding="1">
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{hppd_dos}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement mode="Opaque" x="392" y="122" width="165" height="30" backcolor="#FF0000" uuid="ba2784a0-60bb-42f0-94ef-57526b478c6c"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Dont's]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="392" y="152" width="163" height="20" uuid="44bcf02c-9b0b-41c2-8dd8-218de688fb3a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dontsdataset" uuid="7279670f-875c-4934-9743-be8bf086c250">
+						<datasetParameter name="P_PRESCRIPTION_ID_SUB">
+							<datasetParameterExpression><![CDATA[$P{P_PRESCRIPTION_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="163">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="1" width="159" height="19" isPrintWhenDetailOverflows="true" uuid="09071c01-4a58-47cc-9fd0-8067f6a4969f"/>
+							<box leftPadding="1">
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{hppd_donts}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="3" y="0" width="387" height="30" uuid="3edcf0a5-eea7-4af8-a8bf-fce778f0d3df"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset2" uuid="07916041-2307-4ca2-8e25-7cb406ffc1ba">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="30" width="387">
+						<staticText>
+							<reportElement mode="Transparent" x="3" y="10" width="165" height="20" forecolor="#CC0000" backcolor="#009933" uuid="cb26cd62-fb03-4ea1-b4ff-33ccdf350c33"/>
+							<box leftPadding="1">
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textElement textAlignment="Left"/>
+							<text><![CDATA[MEDICINE]]></text>
+						</staticText>
+						<staticText>
+							<reportElement mode="Transparent" x="168" y="10" width="104" height="20" forecolor="#CC0000" backcolor="#009933" uuid="185b7bce-fb1f-4b5c-bee8-de6a365d8b69"/>
+							<box leftPadding="1">
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textElement textAlignment="Left"/>
+							<text><![CDATA[DOSAGE]]></text>
+						</staticText>
+						<staticText>
+							<reportElement mode="Transparent" x="272" y="10" width="104" height="20" forecolor="#CC0000" backcolor="#009933" uuid="ae447ba0-eeab-4a41-b9cd-9ef5d8aef433"/>
+							<box leftPadding="1">
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textElement textAlignment="Left"/>
+							<text><![CDATA[CONSUME DAYS]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="23">
+			<staticText>
+				<reportElement x="50" y="3" width="402" height="20" uuid="630d8c86-b22d-496a-817a-4039a6daf247"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font size="10" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Working Days : Monday - Saturday              By prior Appointment Only]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

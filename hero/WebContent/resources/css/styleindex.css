@@ -1,0 +1,130 @@
+body {
+	font-family:Calibri;
+	background:url('../images/wall.jpg');
+	background-repeat: no-repeat;
+    background-size: 100% 100%;
+} 
+html{
+	height:100%;
+}
+/*--header--*/
+.header-w3l {
+    padding-top: 2em;
+}
+.header-w3l h1 {
+    font-size: 3.5em;
+    color: #1C485E;
+    letter-spacing: 10px;
+    font-weight: 300;
+    
+}
+.header-w3l h1 span {
+       color: #1d4075;
+	   font-weight:600;
+}
+/*--//header--*/
+/*--main--*/
+.sub-main-w3 {
+	width: 20%;
+    margin:10px 50px 0 50px;
+    float: right;
+    display: block;
+    padding: 50px 20px;
+    sborder: 1px solid #b3b3b3;
+    border-radius: 5px;
+    sbox-shadow: 0 0 3px rgba(0,0,0,.3);
+    background: #0E7BDD;
+    sborder-radius: 120px;
+}
+.sub-main-w3 h2 {
+    font-size:15px;
+    margin-bottom:25px;
+    font-weight:bold;
+    text-align:center;
+    color:white;
+}
+.pom-agile {
+    padding: 6px 8px;
+    border-bottom:1px solid #e4e4e4;
+    sbackground: #f0f4fd;
+}
+.pom-agile:nth-child(1){
+    margin-bottom: 15px;
+}
+.pom-agile input[type="text"], .pom-agile input[type="password"] {
+    outline: none;
+    font-size: 15px;
+    border: none;
+    background: transparent;
+    swidth: 93%;
+    color: #fff;
+    letter-spacing: 1px;
+}
+.pom-agile input[type="text"]::placeholder, .pom-agile input[type="password"]::placeholder {
+    color: white;
+    opacity: 1; 
+}
+span.fa {
+    float: left;
+    color: #000;
+}
+.sub-w3l {
+    padding: 20px 0 30px;
+}
+.sub-agile {
+    float: left;
+}
+.logo_img{
+	width:320px;
+	height:auto;
+	margin:20px 10px 40px 10px;
+}
+.logo_img img{
+	width:100%;
+}
+.other-buttons{
+	padding: 10px 0;
+    font-size: 12px;
+}
+.other-buttons a{
+	color:white;
+}
+.other-buttons a:hover{
+	color:white;
+	text-decoration:none;
+	color:#545454;
+}
+.hoversin{
+	width:80px;
+	margin:40px auto 30px auto;
+	text-align:center;
+	font-size:15px;
+	border-radius:3px;
+	padding:3px;
+	background-image: linear-gradient(to bottom,#fede4b, #feb521) !important;
+	border: 1px solid #feb521 !important;
+	color: #896614 !important;
+	text-shadow: 0 1px 0 rgba(255, 255, 0, 50);
+	font-size:15px !important;
+	font-weight: bold !important;
+}
+.hoversin a{
+	color: #896614 !important;
+}
+.button-bg{
+	background-image: linear-gradient(to bottom,#fede4b, #feb521) !important;
+	border: 1px solid #feb521 !important;
+	color: #896614 !important;
+	text-shadow: 0 1px 0 rgba(255, 255, 0, 50);
+	font-size:15px !important;
+	font-weight: bold !important;
+}
+.modal-header{
+	background:#0e7bdd !important;
+	color:white !important;
+	font-size:18px !important;
+	padding-top: 13px !important;
+}
+.modal-title{
+	padding-bottom:5px !important;
+}
